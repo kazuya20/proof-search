@@ -527,6 +527,7 @@ def summarize(
     enable_classical: bool,
     enable_derived_facts: bool,
     max_derived_facts: int,
+    brief_mode: bool,
 ) -> str:
     derived: Tuple[Formula, ...] = tuple()
     if enable_derived_facts:
@@ -604,9 +605,12 @@ def summarize(
         lines.append('')
     lines.append(f'Showing {min(top_k, len(trees))} proof tree(s):')
     for i, (tree, w) in enumerate(weighted[:top_k], 1):
-        lines.append(f"[{i}] depth={tree.depth()} steps={tree.step_count()} weight={w:.6f}")
-        lines.extend(tree.lines(1))
-        lines.append('')
+        if brief_mode:
+            lines.append(f"[{i}] depth={tree.depth()} steps={tree.step_count()} weight={w:.6f}")
+        else:
+            lines.append(f"[{i}] depth={tree.depth()} steps={tree.step_count()} weight={w:.6f}")
+            lines.extend(tree.lines(1))
+            lines.append('')
     return '\n'.join(lines).rstrip()
 
 # ---------------------------
@@ -646,6 +650,7 @@ def run_demo(args: argparse.Namespace) -> None:
             args.enable_classical,
             args.enable_derived_facts,
             args.max_derived_facts,
+            args.brief_mode,
         ))
 
 
@@ -662,6 +667,7 @@ def main() -> None:
     ap.add_argument('--enable-classical', action='store_true', help='Enable classical rule: reductio ad absurdum (RAA).')
     ap.add_argument('--enable-derived-facts', action='store_true', help='Enable derived facts Delta in search state: (Gamma, Delta, goal).')
     ap.add_argument('--max-derived-facts', type=int, default=16, help='Upper bound for Delta size when derived facts are enabled.')
+    ap.add_argument('--brief', action='store_true', dest='brief_mode', help='Brief mode: suppress detailed proof tree display, show only metadata.')
     ap.add_argument(
         '--rule-weight',
         action='append',
@@ -708,6 +714,7 @@ def main() -> None:
         args.enable_classical,
         args.enable_derived_facts,
         args.max_derived_facts,
+        args.brief_mode,
     ))
 
 if __name__ == '__main__':
