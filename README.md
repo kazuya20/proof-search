@@ -10,8 +10,6 @@
 - 古典規則（RAA）をオプションで有効化
 - 中間命題 Delta（Derived Facts）の再利用
 
-つまり、もはや「一様重みだけの証明数え上げ」ではありません。
-
 ## 何をするツールか
 
 与えられた仮定 Gamma と目標 phi に対して、深さ制限つきで証明木を列挙します。
@@ -28,7 +26,7 @@
 ## 状態モデル
 
 基本状態:
-
+s
 - (Gamma, Goal)
 
 Derived Facts 有効時:
@@ -169,12 +167,4 @@ python proof-search.py --assumptions "A -> B; B -> C; A" --goal "C" --enable-der
   - 証明の深さ・ステップ数分布
 - Total score / Best score
   - 重みモデル下での集計値
-
-## 実装状況
-
-- Phase 1: 選言消去（完了）
-- Phase 2: Weighting mode（完了）
-- Phase 3: 長さペナルティ（完了）
-- Phase 4: 古典規則 RAA（完了）
-- Phase 5: Derived Facts（完了）
 
