@@ -175,7 +175,3 @@ python proof-search.py --assumptions "A | B; A -> C; B -> C" --goal "C" --max-de
   - 証明の深さ・ステップ数分布
 - Total score / Best score
   - 重みモデル下での集計値
-<<<<<<< HEAD
-=======
-
->>>>>>> f744cd8cdf21bbdd819bee7caa211e925f2f6977
